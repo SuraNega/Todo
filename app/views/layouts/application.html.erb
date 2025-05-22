@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  </head>
+
+  <body>
+    <header>
+      <h1>Todo Application</h1>
+      <div class="session-info">
+        <h3><%= time_based_greeting %></h3>
+        <p>Total visits: <%= session[:total_visits] || 0 %></p>
+        <% current_path = "#{controller_name}##{action_name}" %>
+        <% if session[:page_visits] && session[:page_visits][current_path] %>
+          <p>This page visits: <%= session[:page_visits][current_path] %></p>
+        <% end %>
+        <% if session[:last_visited] %>
+          <p>Last visited: <%= time_ago_in_words(session[:last_visited]) %> ago</p>
+        <% end %>
+      </div>
+      
+    </header>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <footer>
+      <p>&copy; <%= Time.current.year %> Todo App</p>
+    </footer>
+  </body>
+</html>

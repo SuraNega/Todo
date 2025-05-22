@@ -1,0 +1,41 @@
+<%= form_with(model: todo) do |form| %>
+  <% if todo.errors.any? %>
+    <div class="error-message" style="color: red; background: #ffeeee; padding: 10px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #ffcccc">
+      <h2 style="margin: 0 0 8px 0; font-size: 1.1em"><%= pluralize(todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
+
+      <ul style="margin: 0; padding-left: 20px">
+        <% todo.errors.each do |error| %>
+          <li style="margin: 4px 0"><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom: 15px">
+    <%= form.label :title, style: "display: block; margin-bottom: 5px; font-weight: bold" %>
+    <%= form.text_field :title, 
+          required: true,
+          style: "width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px",
+          placeholder: "Enter todo title (minimum 2 characters)" %>
+  </div>
+
+  <div style="margin-bottom: 15px">
+    <%= form.label :description, style: "display: block; margin-bottom: 5px; font-weight: bold" %>
+    <%= form.text_area :description, 
+          style: "width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px",
+          placeholder: "Enter description (optional)" %>
+  </div>
+
+  <div style="margin-bottom: 20px">
+    <%= form.label :status, style: "display: block; margin-bottom: 5px; font-weight: bold" %>
+    <%= form.select :status, 
+          options_for_select(['Not Started', 'In Progress', 'Completed'], todo.status || 'Not Started'),
+          { include_blank: false },
+          style: "width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "btn", 
+          style: "background: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer" %>
+  </div>
+<% end %>
